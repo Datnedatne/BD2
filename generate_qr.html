@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🎁 QR Codes — Quà Sinh Nhật Thảo</title>
   <link rel="stylesheet" href="./fonts.css">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'DM Sans', sans-serif;
       background: #0f0520;
@@ -14,6 +20,7 @@
       min-height: 100vh;
       padding: 40px 20px 60px;
     }
+
     h1 {
       font-family: 'Playfair Display', serif;
       font-size: 28px;
@@ -21,10 +28,11 @@
       color: #FFD6E0;
       margin-bottom: 6px;
     }
+
     .subtitle {
       text-align: center;
       font-size: 13px;
-      color: rgba(255,200,220,0.5);
+      color: rgba(255, 200, 220, 0.5);
       margin-bottom: 40px;
       font-family: 'Space Mono', monospace;
       letter-spacing: 2px;
@@ -40,8 +48,8 @@
     }
 
     .qr-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,143,171,0.2);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 143, 171, 0.2);
       border-radius: 22px;
       padding: 28px 24px 22px;
       display: flex;
@@ -52,12 +60,15 @@
       backdrop-filter: blur(8px);
       transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
+
     .qr-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(255,100,150,0.15);
+      box-shadow: 0 16px 40px rgba(255, 100, 150, 0.15);
     }
 
-    .qr-emoji { font-size: 32px; }
+    .qr-emoji {
+      font-size: 32px;
+    }
 
     .qr-card canvas {
       border-radius: 12px;
@@ -75,7 +86,7 @@
     .qr-token {
       font-family: 'Space Mono', monospace;
       font-size: 9px;
-      color: rgba(255,200,220,0.35);
+      color: rgba(255, 200, 220, 0.35);
       text-align: center;
       word-break: break-all;
     }
@@ -83,7 +94,7 @@
     .qr-url {
       font-family: 'Space Mono', monospace;
       font-size: 8px;
-      color: rgba(255,200,220,0.25);
+      color: rgba(255, 200, 220, 0.25);
       text-align: center;
       word-break: break-all;
       margin-top: -6px;
@@ -102,38 +113,59 @@
       font-weight: 700;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.3s ease;
-      box-shadow: 0 6px 24px rgba(232,99,122,0.4);
+      box-shadow: 0 6px 24px rgba(232, 99, 122, 0.4);
       letter-spacing: 0.5px;
     }
+
     .print-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 32px rgba(232,99,122,0.55);
+      box-shadow: 0 10px 32px rgba(232, 99, 122, 0.55);
     }
 
     .notice {
       text-align: center;
       font-size: 12px;
-      color: rgba(255,200,220,0.4);
+      color: rgba(255, 200, 220, 0.4);
       margin-top: 24px;
       line-height: 1.8;
     }
+
     .notice code {
-      background: rgba(255,143,171,0.1);
+      background: rgba(255, 143, 171, 0.1);
       border-radius: 4px;
       padding: 1px 5px;
       font-family: 'Space Mono', monospace;
-      color: rgba(255,200,220,0.6);
+      color: rgba(255, 200, 220, 0.6);
     }
 
     @media print {
-      body { background: white; color: #000; padding: 20px; }
-      .print-btn, .notice { display: none; }
-      .qr-card { border: 1px solid #ddd; page-break-inside: avoid; }
-      .qr-title { color: #333; }
-      .qr-token { color: #999; }
+      body {
+        background: white;
+        color: #000;
+        padding: 20px;
+      }
+
+      .print-btn,
+      .notice {
+        display: none;
+      }
+
+      .qr-card {
+        border: 1px solid #ddd;
+        page-break-inside: avoid;
+      }
+
+      .qr-title {
+        color: #333;
+      }
+
+      .qr-token {
+        color: #999;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <h1>🎁 QR Quà Sinh Nhật — Thảo</h1>
@@ -154,29 +186,31 @@
 
   <script>
     // ── Cấu hình — phải trùng với gift_system.js ──
-    const BASE_URL = window.location.origin + window.location.pathname.replace('generate_qr.html', 'birthday_thao.html');
+    // ⚠️ HARDCODE URL GitHub Pages để QR quét được từ điện thoại
+    const BASE_URL = 'https://datnedatne.github.io/BD2/birthday_thao.html';
+    // Nếu đổi repo/domain thì sửa dòng trên nhé
 
     const GIFTS = [
       {
-        num:   1,
+        num: 1,
         token: 'vutru22',
         emoji: '🌌',
         title: 'Quà 1\nVũ trụ của Em',
       },
       {
-        num:   2,
+        num: 2,
         token: 'vuonhoa22',
         emoji: '🌸',
         title: 'Quà 2\nVườn hoa tình yêu',
       },
       {
-        num:   3,
+        num: 3,
         token: 'bimo22',
         emoji: '🎀',
         title: 'Quà 3\n(Sắp có)',
       },
       {
-        num:   4,
+        num: 4,
         token: 'finale22',
         emoji: '✨',
         title: 'Quà 4\n(Sắp có)',
@@ -215,14 +249,15 @@
 
       // Generate QR
       new QRCode(canvasWrap, {
-        text:          url,
-        width:         160,
-        height:        160,
-        colorDark:     '#2a0a20',
-        colorLight:    '#fff8fb',
-        correctLevel:  QRCode.CorrectLevel.H,
+        text: url,
+        width: 160,
+        height: 160,
+        colorDark: '#2a0a20',
+        colorLight: '#fff8fb',
+        correctLevel: QRCode.CorrectLevel.H,
       });
     });
   </script>
 </body>
+
 </html>
