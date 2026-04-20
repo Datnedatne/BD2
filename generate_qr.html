@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎁 QR Codes — Quà Sinh Nhật Thảo</title>
+  <link rel="stylesheet" href="./fonts.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0f0520;
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px 20px 60px;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      text-align: center;
+      color: #FFD6E0;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255,200,220,0.5);
+      margin-bottom: 40px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 2px;
+    }
+
+    .qr-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      justify-content: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .qr-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,143,171,0.2);
+      border-radius: 22px;
+      padding: 28px 24px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      width: 210px;
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .qr-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(255,100,150,0.15);
+    }
+
+    .qr-emoji { font-size: 32px; }
+
+    .qr-card canvas {
+      border-radius: 12px;
+      display: block;
+    }
+
+    .qr-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      text-align: center;
+      color: #FFD6E0;
+      line-height: 1.4;
+    }
+
+    .qr-token {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: rgba(255,200,220,0.35);
+      text-align: center;
+      word-break: break-all;
+    }
+
+    .qr-url {
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      color: rgba(255,200,220,0.25);
+      text-align: center;
+      word-break: break-all;
+      margin-top: -6px;
+    }
+
+    .print-btn {
+      display: block;
+      margin: 32px auto 0;
+      background: linear-gradient(135deg, #FF8FAB, #E8637A);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 40px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 6px 24px rgba(232,99,122,0.4);
+      letter-spacing: 0.5px;
+    }
+    .print-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(232,99,122,0.55);
+    }
+
+    .notice {
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,200,220,0.4);
+      margin-top: 24px;
+      line-height: 1.8;
+    }
+    .notice code {
+      background: rgba(255,143,171,0.1);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: 'Space Mono', monospace;
+      color: rgba(255,200,220,0.6);
+    }
+
+    @media print {
+      body { background: white; color: #000; padding: 20px; }
+      .print-btn, .notice { display: none; }
+      .qr-card { border: 1px solid #ddd; page-break-inside: avoid; }
+      .qr-title { color: #333; }
+      .qr-token { color: #999; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎁 QR Quà Sinh Nhật — Thảo</h1>
+  <p class="subtitle">IN RA VÀ CẮT THÀNH 4 TẤM CARD NHÉ 🌸</p>
+
+  <div class="qr-grid" id="qr-grid"></div>
+
+  <button class="print-btn" onclick="window.print()">🖨️ In QR Codes</button>
+
+  <p class="notice">
+    ⚠️ Nhớ đặt file <code>birthday_thao.html</code> lên một web server (VS Code Live Server, v.v.)<br>
+    rồi thay <code>localhost:5500</code> trong URL bằng địa chỉ thật nhé.<br>
+    Hoặc dùng <strong>GitHub Pages / Netlify</strong> để có link cố định để in QR.
+  </p>
+
+  <!-- QR code library (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <script>
+    // ── Cấu hình — phải trùng với gift_system.js ──
+    const BASE_URL = window.location.origin + window.location.pathname.replace('generate_qr.html', 'birthday_thao.html');
+
+    const GIFTS = [
+      {
+        num:   1,
+        token: 'vutru22',
+        emoji: '🌌',
+        title: 'Quà 1\nVũ trụ của Em',
+      },
+      {
+        num:   2,
+        token: 'vuonhoa22',
+        emoji: '🌸',
+        title: 'Quà 2\nVườn hoa tình yêu',
+      },
+      {
+        num:   3,
+        token: 'bimo22',
+        emoji: '🎀',
+        title: 'Quà 3\n(Sắp có)',
+      },
+      {
+        num:   4,
+        token: 'finale22',
+        emoji: '✨',
+        title: 'Quà 4\n(Sắp có)',
+      },
+    ];
+
+    const grid = document.getElementById('qr-grid');
+
+    GIFTS.forEach(g => {
+      const url = `${BASE_URL}?gift=${g.num}&t=${g.token}`;
+
+      const card = document.createElement('div');
+      card.className = 'qr-card';
+
+      const emojiEl = document.createElement('div');
+      emojiEl.className = 'qr-emoji';
+      emojiEl.textContent = g.emoji;
+
+      const canvasWrap = document.createElement('div');
+      canvasWrap.id = `qr-wrap-${g.num}`;
+
+      const titleEl = document.createElement('p');
+      titleEl.className = 'qr-title';
+      titleEl.textContent = g.title;
+
+      const tokenEl = document.createElement('p');
+      tokenEl.className = 'qr-token';
+      tokenEl.textContent = `Token: ${g.token}`;
+
+      const urlEl = document.createElement('p');
+      urlEl.className = 'qr-url';
+      urlEl.textContent = url;
+
+      card.append(emojiEl, canvasWrap, titleEl, tokenEl, urlEl);
+      grid.appendChild(card);
+
+      // Generate QR
+      new QRCode(canvasWrap, {
+        text:          url,
+        width:         160,
+        height:        160,
+        colorDark:     '#2a0a20',
+        colorLight:    '#fff8fb',
+        correctLevel:  QRCode.CorrectLevel.H,
+      });
+    });
+  </script>
+</body>
+</html>

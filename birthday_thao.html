@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Thảo 🌸</title>
+
+  <!-- Google Fonts (local cache) -->
+  <link rel="stylesheet" href="./fonts.css">
+
+  <!-- Swiper CSS (local) -->
+  <link rel="stylesheet" href="./swiper.min.css">
+
+  <!-- App Styles -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Garden slide styles -->
+  <link rel="stylesheet" href="garden.css">
+  <!-- Platformer game styles -->
+  <link rel="stylesheet" href="platformer.css">
+
+  <!-- QR Gift System styles -->
+  <link rel="stylesheet" href="gift_system.css">
+</head>
+
+<body>
+
+  <!-- Custom cursor -->
+  <div id="cursor">✿</div>
+
+  <!-- Top progress bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Petal canvas (global, fixed) -->
+  <canvas id="petal-canvas"></canvas>
+
+  <!-- Confetti canvas (global, fixed) -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Sidebar Nav Dots (fixed right) -->
+  <nav id="sidebar-nav">
+    <div class="nav-dot" data-scene="0" data-label="Bắt đầu"></div>
+    <div class="nav-dot active" data-scene="1" data-label="Chào Thảo"></div>
+    <div class="nav-dot" data-scene="2" data-label="Chuyện mình"></div>
+    <div class="nav-dot" data-scene="3" data-label="Vũ trụ của Em"></div>
+    <div class="nav-dot" data-scene="4" data-label="Vườn hoa"></div>
+    <div class="nav-dot" data-scene="5" data-label="Quà tặng"></div>
+    <div class="nav-dot" data-scene="6" data-label="Mini games"></div>
+    <div class="nav-dot" data-scene="7" data-label="Thư tình"></div>
+    <div class="nav-dot" data-scene="8" data-label="Playlist"></div>
+    <div class="nav-dot" data-scene="9" data-label="Điều ước"></div>
+    <div class="nav-dot" data-scene="10" data-label="Finale"></div>
+    <div class="nav-dot" data-scene="11" data-label="Chinh phục"></div>
+  </nav>
+
+  <!-- Slide navigation arrow buttons -->
+  <button id="slide-prev-btn" title="Slide trước">↑</button>
+  <button id="slide-next-btn" title="Slide tiếp">↓</button>
+
+  <!-- WARP OVERLAY -->
+  <div id="warp-overlay">
+    <canvas id="warp-canvas"></canvas>
+  </div>
+
+  <!-- ============================================================
+       SCENE 0 — DINO GAME (outside swiper, fixed fullscreen)
+  ============================================================ -->
+  <div id="scene-dino">
+    <div id="dino-game-area">
+      <div id="dino-score-row">
+        <span style="font-size:12px;letter-spacing:3px;color:#888">NO CONNECTION</span>
+        <span>HI &nbsp;<span id="dino-hi">00000</span> &nbsp; <span id="dino-score-display">00000</span></span>
+      </div>
+      <canvas id="dino-canvas" width="700" height="180"></canvas>
+      <div id="dino-msg"></div>
+      <div id="dino-hint">
+        Có vẻ kết nối bị mất...<br>
+        hoặc là có thứ gì đó đang chờ em? 🦕<br>
+        <span style="opacity:0.5;font-size:12px">[ SPACE / TAP để nhảy ]</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       FULLPAGE SWIPER — Slides 1–8
+  ============================================================ -->
+  <div class="swiper" id="fullpage-swiper">
+    <div class="swiper-wrapper">
+
+      <!-- ================================================
+           SLIDE 1 — HERO
+      ================================================ -->
+      <div class="swiper-slide" id="slide-hero" data-scene-index="1">
+        <section class="scene" id="scene-hero">
+          <div id="hero-moon"></div>
+          <div class="hero-content">
+            <!-- Cake SVG -->
+            <svg id="cake-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="70" width="100" height="40" rx="8" fill="#FFB3C6" />
+              <rect x="20" y="50" width="80" height="25" rx="6" fill="#FF8FAB" />
+              <rect x="30" y="36" width="60" height="18" rx="5" fill="#FFD6E0" />
+              <!-- icing drips -->
+              <ellipse cx="40" cy="50" rx="5" ry="8" fill="#FFF8F9" />
+              <ellipse cx="60" cy="50" rx="5" ry="8" fill="#FFF8F9" />
+              <ellipse cx="80" cy="50" rx="5" ry="8" fill="#FFF8F9" />
+              <ellipse cx="50" cy="70" rx="5" ry="8" fill="rgba(255,255,255,0.6)" />
+              <ellipse cx="70" cy="70" rx="5" ry="8" fill="rgba(255,255,255,0.6)" />
+              <!-- "22" text -->
+              <text x="60" y="90" font-family="Georgia" font-size="16" fill="white" text-anchor="middle"
+                font-weight="bold">22</text>
+            </svg>
+
+            <div class="candles-row" id="candles-row"></div>
+
+            <p class="hero-title reveal">Chúc mừng sinh nhật</p>
+            <h1 class="hero-name reveal">THẢO</h1>
+            <p class="hero-date reveal">22 tuổi &nbsp;·&nbsp; 01 / 05 / 2025</p>
+            <button id="blow-btn" onclick="blowAllCandles()">Thổi nến nào em 🕯️</button>
+          </div>
+          <div class="scroll-down">✦ vuốt xuống ✦</div>
+        </section>
+      </div>
+
+      <!-- ================================================
+           SLIDE 2 — TIMELINE
+      ================================================ -->
+      <div class="swiper-slide" id="slide-timeline" data-scene-index="2">
+        <section class="scene" id="scene-timeline">
+          <div style="text-align:center;margin-bottom:20px">
+            <p class="section-label reveal">Chuyện của chúng mình</p>
+            <h2 class="section-title reveal">Từ <em>tháng 10</em> đến hôm nay</h2>
+          </div>
+          <div style="width:100%;overflow:hidden;position:relative">
+            <div class="timeline-track" id="timeline-track">
+
+              <div class="timeline-card reveal">
+                <span class="timeline-num">01</span>
+                <span class="timeline-icon">🏢</span>
+                <p class="timeline-date">Tháng 10, 2024</p>
+                <h3 class="timeline-heading">Ngày anh về Technopark</h3>
+                <p class="timeline-text">Anh chuyển văn phòng về tòa nhà Technopark Hà Nội, tầng 8A. Nhìn ra cửa sổ là cả
+                  thành phố — nhưng thứ anh chú ý nhất lại là em.</p>
+              </div>
+
+              <div class="timeline-card reveal">
+                <span class="timeline-num">02</span>
+                <span class="timeline-icon">🪑</span>
+                <p class="timeline-date">Một ngày đặc biệt</p>
+                <h3 class="timeline-heading">Em ngồi cạnh anh</h3>
+                <p class="timeline-text">Rồi một ngày, team em chuyển chỗ. Em qua ngồi cạnh chỗ anh. Anh không biết đó là ngẫu
+                  nhiên hay vũ trụ đã sắp xếp — nhưng anh thích kết quả đó lắm 🪐</p>
+              </div>
+
+              <div class="timeline-card reveal">
+                <span class="timeline-num">03</span>
+                <span class="timeline-icon">🌃</span>
+                <p class="timeline-date">Ngày đầu tiên</p>
+                <h3 class="timeline-heading">Anh đưa em về</h3>
+                <p class="timeline-text">Và tất cả bắt đầu từ ngày hôm đó — ngày đầu tiên anh đưa em về. Đường phố Hà Nội đêm
+                  đó đẹp lắm, hay vì có em ở cạnh nhỉ?</p>
+              </div>
+
+              <div class="timeline-card reveal" id="loopy-card">
+                <span class="timeline-num">04</span>
+                <span class="timeline-icon">🩷</span>
+                <p class="timeline-date">Món quà đầu tiên</p>
+                <h3 class="timeline-heading">6 con Loopy màu hồng</h3>
+                <p class="timeline-text">Anh tặng em 6 con Loopy màu hồng — nhỏ thôi, nhưng anh nhớ mãi ánh mắt của em lúc
+                  nhận. Chắc anh đã thích em từ rất lâu rồi.</p>
+                <div style="display:flex;gap:6px;margin-top:16px;flex-wrap:wrap">
+                  <span style="font-size:22px;animation:hop 0.5s ease infinite alternate;--d:0s">🧸</span>
+                  <span style="font-size:22px;animation:hop 0.5s ease infinite alternate;animation-delay:0.1s">🧸</span>
+                  <span style="font-size:22px;animation:hop 0.5s ease infinite alternate;animation-delay:0.2s">🧸</span>
+                  <span style="font-size:22px;animation:hop 0.5s ease infinite alternate;animation-delay:0.3s">🧸</span>
+                  <span style="font-size:22px;animation:hop 0.5s ease infinite alternate;animation-delay:0.4s">🧸</span>
+                  <span style="font-size:22px;animation:hop 0.5s ease infinite alternate;animation-delay:0.5s">🧸</span>
+                </div>
+              </div>
+
+              <div class="timeline-card reveal" style="border-color:rgba(247,215,148,0.3)">
+                <span class="timeline-num" style="color:rgba(247,215,148,0.1)">05</span>
+                <span class="timeline-icon">🌹</span>
+                <p class="timeline-date" style="color:var(--gold-warm)">01 / 05 / 2025</p>
+                <h3 class="timeline-heading" style="color:var(--gold-soft)">Happy Birthday, Thảo ✨</h3>
+                <p class="timeline-text">Hôm nay, lần đầu tiên anh được ở bên cạnh em đón sinh nhật. Mong sẽ còn thật nhiều
+                  lần như thế này — và mỗi lần trôi qua, chúng ta lại yêu nhau hơn một chút 🩷</p>
+              </div>
+
+            </div>
+          </div>
+          <div class="timeline-controls">
+            <button class="tl-btn" onclick="moveTimeline(-1)">←</button>
+            <button class="tl-btn" onclick="moveTimeline(1)">→</button>
+          </div>
+          <div class="timeline-progress" id="tl-progress"></div>
+        </section>
+      </div>
+
+      <!-- ================================================
+           SLIDE 3 — VŨ TRỤ CỦA EM (Three.js Galaxy)
+      ================================================ -->
+      <div class="swiper-slide" id="slide-galaxy" data-scene-index="3">
+        <!-- Three.js canvas goes here (injected by JS) -->
+        <div id="galaxy-canvas-container"></div>
+
+        <!-- Loading fallback (hidden once Three.js renders) -->
+        <div id="galaxy-loading">
+          <div class="galaxy-loading-dots"><span></span><span></span><span></span></div>
+          <p>Đang tải bầu trời...</p>
+        </div>
+
+        <!-- UI Overlay -->
+        <div class="galaxy-ui">
+          <p class="galaxy-section-label reveal">Vũ trụ của Em</p>
+          <h2 class="galaxy-title reveal">✦ Những <em>ngôi sao</em> của chúng mình ✦</h2>
+          <p class="galaxy-hint reveal">✨ Di chuột vào ngôi sao — click để xem kỷ niệm</p>
+        </div>
+
+        <!-- Hover tooltip (positioned by JS) -->
+        <div id="galaxy-tooltip"></div>
+      </div>
+
+      <!-- ================================================
+           SLIDE 4 — VƯỜN HOA TÌNH YÊU (Garden)
+      ================================================ -->
+      <div class="swiper-slide" id="slide-garden" data-scene-index="4">
+        <div id="scene-garden">
+
+          <!-- Trang trí bầu trời -->
+          <div class="gd-sun"></div>
+          <div class="gd-cloud gd-c1"></div>
+          <div class="gd-cloud gd-c2"></div>
+          <div class="gd-cloud gd-c3"></div>
+
+          <!-- Tiêu đề -->
+          <div class="gd-title-area">
+            <p class="gd-label reveal">Vườn hoa tình yêu</p>
+            <h2 class="gd-title reveal">🌷 Click vào vườn · bấm <em>Tưới nước</em> để trồng hoa</h2>
+          </div>
+
+          <!-- Khu vực vườn (click để trồng hoa) -->
+          <div id="garden-field"></div>
+
+          <!-- Thanh điều khiển -->
+          <div class="gd-controls">
+            <span class="gd-count" id="gd-count"></span>
+            <button class="gd-btn gd-btn-water" id="water-btn" onclick="waterGarden()">💧 Tưới nước</button>
+            <button class="gd-btn gd-btn-save" id="save-btn" onclick="saveGarden()">📷 Lưu vườn hoa</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ================================================
+           SLIDE 5 — GIFT VAULT (scrollable)
+      ================================================ -->
+      <div class="swiper-slide slide-scrollable" id="slide-gifts" data-scene-index="5">
+        <section class="scene" id="scene-gifts">
+          <p class="section-label reveal">Dành riêng cho em</p>
+          <h2 class="section-title reveal">🎁 Quà <em>theo giờ</em></h2>
+
+          <div class="gifts-grid">
+
+            <!-- Gift 1 — 8:00 AM -->
+            <div class="gift-box" id="gift-1" data-hour="8">
+              <div class="gift-ribbon"></div>
+              <span class="gift-emoji">🌅</span>
+              <p class="gift-time-label">Mở lúc 8:00 sáng</p>
+              <h3 class="gift-title">Buổi sáng đầu tiên</h3>
+              <p class="gift-hint">Bắt đầu ngày đặc biệt này với một nụ cười nhé em ☀️</p>
+              <div class="gift-countdown" id="gift-cd-1"></div>
+              <div class="gift-lock" id="gift-lock-1">🔒</div>
+              <div class="gift-content" id="gift-content-1">
+                <div
+                  style="font-family:'Dancing Script',cursive;font-size:17px;line-height:2;color:#4a2d35;background:#fffdf8;border-radius:12px;padding:20px;">
+                  Chào buổi sáng, người anh thương nhất 🌸<br><br>
+                  Hôm nay là ngày đặc biệt của em — và anh muốn em bắt đầu ngày này với nụ cười.<br><br>
+                  Em đã 22 tuổi rồi đấy — đẹp hơn, trưởng thành hơn... và anh thấy mình may mắn lắm khi được ở cạnh
+                  em.<br><br>
+                  Ăn sáng ngon nhé, hôm nay còn nhiều bất ngờ nữa đấy 🎀
+                </div>
+              </div>
+            </div>
+
+            <!-- Gift 2 — 12:30 PM -->
+            <div class="gift-box" id="gift-2" data-hour="12" data-min="30">
+              <div class="gift-ribbon"></div>
+              <span class="gift-emoji">🌸</span>
+              <p class="gift-time-label">Mở lúc 12:30 trưa</p>
+              <h3 class="gift-title">Giữa ngày</h3>
+              <p class="gift-hint">Chờ tí nhé em, anh có gì đó muốn show 🌷</p>
+              <div class="gift-countdown" id="gift-cd-2"></div>
+              <div class="gift-lock" id="gift-lock-2">🔒</div>
+              <div class="gift-content" id="gift-content-2">
+                <div style="font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.9;color:var(--pink-light)">
+                  🎵 <em>Playlist của chúng mình</em><br><br>
+                  Mỗi lần nghe "Nothing" của Bruno Major hay "A Thousand Years" — anh lại nghĩ đến em.<br><br>
+                  Mở tai nghe lên, thả lỏng một chút giữa ngày bận rộn nhé. Anh thương em 🩷
+                </div>
+                <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+                  <a href="https://www.youtube.com/results?search_query=Bruno+Major+Nothing" target="_blank"
+                    style="display:flex;align-items:center;gap:10px;background:rgba(255,143,171,0.1);border:1px solid rgba(255,143,171,0.3);border-radius:10px;padding:12px;text-decoration:none;color:var(--white-cream);font-size:13px">
+                    🎵 Nothing — Bruno Major
+                  </a>
+                  <a href="https://www.youtube.com/results?search_query=A+Thousand+Years+Christina+Perri" target="_blank"
+                    style="display:flex;align-items:center;gap:10px;background:rgba(255,143,171,0.1);border:1px solid rgba(255,143,171,0.3);border-radius:10px;padding:12px;text-decoration:none;color:var(--white-cream);font-size:13px">
+                    🎵 A Thousand Years — Christina Perri
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gift 3 — 20:00 PM -->
+            <div class="gift-box" id="gift-3" data-hour="20">
+              <div class="gift-ribbon"></div>
+              <span class="gift-emoji">🌙</span>
+              <p class="gift-time-label">Mở lúc 20:00 tối</p>
+              <h3 class="gift-title">Về nhà đợi em 🏠</h3>
+              <p class="gift-hint"><em style="font-size:13px">Món này... em phải về nhà mới mở được.<br>(Nghiêm túc đó, về đi
+                  rồi tính 🤫)</em></p>
+              <div class="gift-countdown" id="gift-cd-3"></div>
+              <div class="gift-lock" id="gift-lock-3">🔒</div>
+              <div class="gift-content" id="gift-content-3">
+                <div style="text-align:center;padding:20px 0">
+                  <div style="font-size:48px;margin-bottom:16px">🎀</div>
+                  <p style="font-family:'Playfair Display',serif;font-size:20px;color:var(--gold-soft);margin-bottom:12px">Em
+                    đã về rồi...</p>
+                  <p
+                    style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--pink-light);line-height:1.8">
+                    Nhìn ra chỗ anh để ở nhé 🎁<br>
+                    Có thứ gì đó đang đợi em ở đó — anh không spoil đâu 🤫<br><br>
+                    <span style="font-size:14px;color:var(--grey-mist)">Chúc mừng sinh nhật em yêu 🩷</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+        <span class="scroll-hint">↓ cuộn để xem thêm · ↓ cuộn cùng để tiếp</span>
+      </div>
+
+      <!-- ================================================
+           SLIDE 4 — MINI GAMES (scrollable)
+      ================================================ -->
+      <div class="swiper-slide slide-scrollable" id="slide-games" data-scene-index="6">
+        <section class="scene" id="scene-games">
+          <p class="section-label reveal">Chơi thử nhé em</p>
+          <h2 class="section-title reveal">🎮 Mini <em>Games</em></h2>
+
+          <div class="games-tabs">
+            <button class="game-tab active" onclick="switchGame('quiz')">💬 Anh biết em chưa?</button>
+            <button class="game-tab" onclick="switchGame('catch')">🌸 Hứng hoa rơi</button>
+            <button class="game-tab" onclick="switchGame('puzzle')">🧩 Puzzle ký ức</button>
+          </div>
+
+          <!-- QUIZ -->
+          <div class="game-panel active" id="game-quiz" style="width:100%;max-width:640px">
+            <div class="quiz-card">
+              <div class="quiz-progress-bar">
+                <div class="quiz-progress-fill" id="quiz-prog"></div>
+              </div>
+              <div id="quiz-area">
+                <p class="quiz-q" id="quiz-question"></p>
+                <div class="quiz-options" id="quiz-options"></div>
+              </div>
+              <div class="quiz-result" id="quiz-result">
+                <div class="big-score" id="quiz-final-score"></div>
+                <p class="quiz-result-msg" id="quiz-result-msg"></p>
+                <button class="game-start-btn" style="margin-top:24px" onclick="initQuiz()">Chơi lại 🔄</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CATCH PETALS -->
+          <div class="game-panel" id="game-catch" style="width:100%;max-width:540px;text-align:center">
+            <div class="catch-score-display">🌸 <span id="catch-score">0</span> &nbsp;|&nbsp; ⏱ <span
+                id="catch-timer">30</span>s</div>
+            <canvas id="catch-canvas" width="500" height="320"></canvas>
+            <button class="game-start-btn" id="catch-start-btn" onclick="startCatchGame()">Bắt đầu 🌸</button>
+            <p id="catch-result"
+              style="font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--pink-light);margin-top:16px;min-height:30px">
+            </p>
+          </div>
+
+          <!-- PUZZLE -->
+          <div class="game-panel" id="game-puzzle" style="width:100%;max-width:400px">
+            <div class="puzzle-wrap">
+              <div id="puzzle-grid"></div>
+              <p class="puzzle-complete-msg" id="puzzle-msg">✨ Mỗi mảnh nhỏ của kỷ niệm — ghép lại thành một chuyện tình đẹp
+                🩷</p>
+              <button class="game-start-btn" onclick="initPuzzle()">Trộn lại 🔀</button>
+            </div>
+          </div>
+        </section>
+        <span class="scroll-hint">↓ cuộn bên trong · cuộn mạnh để sang slide tiếp</span>
+      </div>
+
+      <!-- ================================================
+           SLIDE 5 — LOVE LETTER (scrollable)
+      ================================================ -->
+      <div class="swiper-slide slide-scrollable" id="slide-letter" data-scene-index="7">
+        <section class="scene" id="scene-letter">
+          <p class="section-label reveal">Gửi em</p>
+          <h2 class="section-title reveal">Thư từ <em>Đạt</em> 💌</h2>
+
+          <div class="envelope-wrap reveal" id="envelope-wrap">
+            <div class="envelope-body" id="envelope-body">
+              <div class="envelope-flap" id="envelope-flap"></div>
+              <div class="envelope-seal" id="envelope-seal" onclick="openLetter()">✿</div>
+
+              <!-- Letter content (hidden until opened) -->
+              <div class="letter-content" id="letter-content">
+                <div class="letter-paper">
+                  <div class="letter-lines">
+                    <p class="letter-date">Hà Nội, ngày 1 tháng 5 năm 2025</p>
+                    <div class="letter-body" id="letter-text"></div>
+                    <p class="letter-sign">— Đạt ✍️ 🩷</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="envelope-click-hint" id="letter-hint">Click vào seal để mở thư 💌</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- ================================================
+           SLIDE 6 — PLAYLIST
+      ================================================ -->
+      <div class="swiper-slide" id="slide-playlist" data-scene-index="8">
+        <section class="scene" id="scene-playlist">
+          <p class="section-label reveal">Nhạc của chúng mình</p>
+          <h2 class="section-title reveal">🎵 <em>Playlist</em></h2>
+
+          <div class="vinyl-player reveal">
+            <div class="vinyl-disc" id="vinyl-disc">
+              <div class="vinyl-center">♫<br>OUR<br>SONGS</div>
+            </div>
+
+            <div class="waveform" id="waveform"></div>
+
+            <div class="playlist-tracks">
+              <div class="track-item" id="track-1" onclick="playTrack(0)">
+                <span class="track-icon">🎵</span>
+                <div class="track-info">
+                  <p class="track-name">Nothing</p>
+                  <p class="track-artist">Bruno Major</p>
+                </div>
+                <div class="track-play">▶</div>
+              </div>
+              <div class="track-item" id="track-2" onclick="playTrack(1)">
+                <span class="track-icon">🎵</span>
+                <div class="track-info">
+                  <p class="track-name">A Thousand Years</p>
+                  <p class="track-artist">Christina Perri</p>
+                </div>
+                <div class="track-play">▶</div>
+              </div>
+            </div>
+
+            <p class="track-lyric" id="track-lyric"></p>
+          </div>
+        </section>
+      </div>
+
+      <!-- ================================================
+           SLIDE 7 — COUNTDOWN & WISH BOARD (scrollable)
+      ================================================ -->
+      <div class="swiper-slide slide-scrollable" id="slide-countdown" data-scene-index="9">
+        <section class="scene" id="scene-countdown">
+          <p class="section-label reveal">Thời gian &amp; Điều ước</p>
+          <h2 class="section-title reveal">✨ Đếm <em>từng giây</em></h2>
+
+          <div class="countdown-grid reveal">
+            <div class="countdown-card">
+              <p class="countdown-card-label">🎂 Đến sinh nhật 23 của em</p>
+              <div class="countdown-nums" id="cd-next-bday"></div>
+            </div>
+            <div class="countdown-card">
+              <p class="countdown-card-label">🩷 Chúng mình đã ở bên nhau</p>
+              <div class="countdown-nums" id="cd-together"></div>
+            </div>
+          </div>
+
+          <div class="wish-board reveal" style="max-width:600px;width:100%">
+            <p class="wish-board-title">📌 Bảng điều ước của Thảo</p>
+            <div class="wish-notes" id="wish-notes">
+              <div class="wish-note wish-dat-note" style="--rot:-2deg">
+                Anh ước chúng mình còn thật nhiều lần thổi nến cùng nhau 🕯️<br><small>— Đạt</small>
+              </div>
+            </div>
+            <div class="wish-input-row">
+              <input class="wish-input" id="wish-input" placeholder="Em ước điều gì cho năm 22? ✨" maxlength="80"
+                onkeydown="if(event.key==='Enter')addWish()">
+              <button class="wish-submit" onclick="addWish()">📌</button>
+            </div>
+          </div>
+        </section>
+        <span class="scroll-hint">↓ cuộn để xem Bảng điều ước</span>
+      </div>
+
+      <!-- ================================================
+           SLIDE 8 — GRAND FINALE
+      ================================================ -->
+      <div class="swiper-slide" id="slide-finale" data-scene-index="10">
+        <section class="scene" id="scene-finale">
+          <canvas id="firework-canvas"></canvas>
+          <div class="finale-content">
+            <div class="finale-stars" id="finale-stars">✦ ✦ ✦</div>
+            <p class="finale-hb">Happy Birthday</p>
+            <h1 class="finale-name">Thảo</h1>
+            <div class="finale-date-badge">01 · 05 · 2025</div>
+            <p class="finale-from">Từ người thương em,</p>
+            <span class="finale-heart">🩷</span>
+            <p class="finale-quote">"Cảm ơn em vì đã đến."</p>
+            <p style="font-family:'Dancing Script',cursive;font-size:28px;color:var(--pink-mid)">Đạt</p>
+
+            <div id="loopy-easter">
+              <p style="font-family:'DM Sans';font-size:13px;color:var(--grey-mist);margin:24px 0 12px;letter-spacing:2px">6
+                con Loopy gửi lời chúc sinh nhật em 🩷</p>
+              <div class="loopy-crew">
+                <span class="loopy-hop" style="--d:0s">🧸</span>
+                <span class="loopy-hop" style="--d:0.1s">🧸</span>
+                <span class="loopy-hop" style="--d:0.2s">🧸</span>
+                <span class="loopy-hop" style="--d:0.3s">🧸</span>
+                <span class="loopy-hop" style="--d:0.4s">🧸</span>
+                <span class="loopy-hop" style="--d:0.5s">🧸</span>
+              </div>
+            </div>
+
+            <br>
+            <button class="restart-btn" onclick="location.reload()">🔄 Bắt đầu lại từ đầu</button>
+          </div>
+        </section>
+      </div>
+
+
+      <!-- ================================================
+           SLIDE 9 — PLATFORMER MINI-GAME
+      ================================================ -->
+      <div class="swiper-slide" id="slide-platformer" data-scene-index="11">
+
+        <!-- Header -->
+        <div class="plat-header">
+          <p class="plat-label reveal">Mini Game · Cuối Hành Trình</p>
+          <h2 class="plat-title reveal">🎮 Vượt <em>thử thách</em> — Về bên anh 🩷</h2>
+        </div>
+
+        <!-- Controls hint -->
+        <div class="plat-controls-bar">
+          <span><kbd>←</kbd><kbd>→</kbd> Di chuyển</span>
+          <span>·</span>
+          <span><kbd>↑</kbd><kbd>Space</kbd> Nhảy</span>
+          <span>·</span>
+          <span>Tránh chướng ngại vật · Chạm đến anh 🩷</span>
+        </div>
+
+        <!-- HUD (lives) -->
+        <div id="plat-hud">
+          <span class="plat-hud-label">Mạng sống</span>
+          <div class="plat-hud-lives">🩷🩷🩷</div>
+        </div>
+
+        <!-- Canvas wrapper -->
+        <div id="platformer-wrap">
+          <canvas id="platformer-canvas"></canvas>
+        </div>
+
+        <!-- Firework canvas (win effect, fullscreen within slide) -->
+        <canvas id="plat-firework-canvas"></canvas>
+
+        <!-- Start / Game Over overlay -->
+        <div id="plat-start-overlay">
+          <div class="plat-start-icon">🏃‍♀️</div>
+          <h3 class="plat-start-title">Hành trình chinh phục</h3>
+          <p class="plat-start-sub">Nhảy qua Deadline · Cơm áo · Mưa nắng — chạy về bên anh 🩷</p>
+          <button class="plat-start-btn" id="plat-start-btn">▶ BẮT ĐẦU</button>
+          <p class="plat-gameover-msg">Em đã hết mạng rồi 💔 — Thử lại nhé! (3 mạng mới)</p>
+        </div>
+
+        <!-- Win Modal -->
+        <div id="plat-win-modal">
+          <div class="plat-win-box">
+            <span class="plat-win-bag-emoji">👜</span>
+            <h3 class="plat-win-title">Chúc mừng em! 🎉</h3>
+            <div class="plat-win-divider"></div>
+            <p class="plat-win-msg">
+              Chúc mừng em đã vượt qua mọi thử thách.<br>
+              Món quà cuối cùng đang ở ngay trước mắt em.<br><br>
+              <em>Anh yêu em.</em>
+            </p>
+            <span class="plat-win-love">— Đạt 🩷</span>
+            <button class="plat-win-replay-btn" id="plat-win-replay-btn">🔄 Chơi lại từ đầu</button>
+          </div>
+        </div>
+
+        <!-- Mobile touch buttons -->
+        <div id="plat-mobile-btns">
+          <div class="plat-mb-group">
+            <button class="plat-mb-btn" id="plat-btn-left">◀</button>
+            <button class="plat-mb-btn" id="plat-btn-right">▶</button>
+          </div>
+          <div class="plat-mb-group">
+            <button class="plat-mb-btn" id="plat-btn-jump">▲</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div><!-- /.swiper-wrapper -->
+  </div><!-- /#fullpage-swiper -->
+
+  <!-- Swiper.js v11 (local) -->
+  <script src="./swiper.min.js"></script>
+
+  <!-- Three.js r128 (local file — không cần mạng) -->
+  <script src="./three.min.js"></script>
+
+  <!-- html2canvas (local) — dùng cho tính năng lưu vườn hoa -->
+  <script src="./html2canvas.min.js"></script>
+
+  <!-- QR Gift System (MUST load before script.js to set window.QR_GIFT_MODE) -->
+  <script src="gift_system.js"></script>
+
+  <!-- Platformer game -->
+  <script src="platformer.js" defer></script>
+
+  <!-- App Script -->
+  <script src="script.js"></script>
+
+  <!-- Star Memory Modal (Glassmorphism) -->
+  <div id="star-modal" onclick="handleModalOverlayClick(event)">
+    <div class="star-modal-glass">
+      <button class="star-modal-close" onclick="closeStarModal()" title="Đóng">&#x2715;</button>
+
+      <!-- Media area: real photo or placeholder -->
+      <div class="star-modal-media">
+        <img id="star-modal-img" src="" alt="Kỷ niệm" style="display:none">
+        <div id="star-modal-placeholder" class="star-modal-placeholder" style="display:none">
+          <span class="star-modal-placeholder-emoji"></span>
+          <div class="star-modal-placeholder-stars"><span>★</span> &nbsp; · &nbsp; <span>★</span> &nbsp; · &nbsp; <span>★</span></div>
+        </div>
+      </div>
+
+      <!-- Text body -->
+      <div class="star-modal-body">
+        <span class="star-modal-emoji-large" id="star-modal-emoji"></span>
+        <p class="star-modal-date" id="star-modal-date"></p>
+        <div class="star-modal-divider"></div>
+        <h3 class="star-modal-title" id="star-modal-title"></h3>
+        <p class="star-modal-story" id="star-modal-story"></p>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
