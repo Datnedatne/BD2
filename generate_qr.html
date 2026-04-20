@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🎁 QR Codes — Quà Sinh Nhật Thảo</title>
   <link rel="stylesheet" href="./fonts.css">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'DM Sans', sans-serif;
@@ -32,7 +27,7 @@
     .subtitle {
       text-align: center;
       font-size: 13px;
-      color: rgba(255, 200, 220, 0.5);
+      color: rgba(255,200,220,0.5);
       margin-bottom: 40px;
       font-family: 'Space Mono', monospace;
       letter-spacing: 2px;
@@ -43,36 +38,45 @@
       flex-wrap: wrap;
       gap: 28px;
       justify-content: center;
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
     }
 
     .qr-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 143, 171, 0.2);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,143,171,0.25);
       border-radius: 22px;
       padding: 28px 24px 22px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
-      width: 210px;
+      gap: 12px;
+      width: 220px;
       backdrop-filter: blur(8px);
       transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
 
     .qr-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(255, 100, 150, 0.15);
+      box-shadow: 0 16px 40px rgba(255,100,150,0.15);
     }
 
-    .qr-emoji {
-      font-size: 32px;
+    .qr-emoji { font-size: 32px; }
+
+    /* QR image — white bg padding để camera nhận rõ hơn */
+    .qr-img-wrap {
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px;
+      display: inline-block;
+      line-height: 0;
     }
 
-    .qr-card canvas {
-      border-radius: 12px;
+    .qr-img-wrap img {
       display: block;
+      width: 200px;
+      height: 200px;
+      border-radius: 4px;
     }
 
     .qr-title {
@@ -80,29 +84,21 @@
       font-size: 15px;
       text-align: center;
       color: #FFD6E0;
-      line-height: 1.4;
-    }
-
-    .qr-token {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      color: rgba(255, 200, 220, 0.35);
-      text-align: center;
-      word-break: break-all;
+      line-height: 1.5;
+      white-space: pre-line;
     }
 
     .qr-url {
       font-family: 'Space Mono', monospace;
       font-size: 8px;
-      color: rgba(255, 200, 220, 0.25);
+      color: rgba(255,200,220,0.3);
       text-align: center;
       word-break: break-all;
-      margin-top: -6px;
     }
 
     .print-btn {
       display: block;
-      margin: 32px auto 0;
+      margin: 36px auto 0;
       background: linear-gradient(135deg, #FF8FAB, #E8637A);
       color: white;
       border: none;
@@ -112,60 +108,51 @@
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
-      box-shadow: 0 6px 24px rgba(232, 99, 122, 0.4);
-      letter-spacing: 0.5px;
+      box-shadow: 0 6px 24px rgba(232,99,122,0.4);
+      transition: transform 0.2s, box-shadow 0.3s;
     }
 
     .print-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 32px rgba(232, 99, 122, 0.55);
+      box-shadow: 0 10px 32px rgba(232,99,122,0.55);
     }
 
     .notice {
       text-align: center;
       font-size: 12px;
-      color: rgba(255, 200, 220, 0.4);
+      color: rgba(255,200,220,0.45);
       margin-top: 24px;
-      line-height: 1.8;
+      line-height: 1.9;
     }
 
     .notice code {
-      background: rgba(255, 143, 171, 0.1);
+      background: rgba(255,143,171,0.12);
       border-radius: 4px;
       padding: 1px 5px;
       font-family: 'Space Mono', monospace;
-      color: rgba(255, 200, 220, 0.6);
+      color: rgba(255,200,220,0.7);
     }
 
+    /* ── PRINT STYLES ── */
     @media print {
       body {
         background: white;
         color: #000;
-        padding: 20px;
+        padding: 10px;
       }
-
-      .print-btn,
-      .notice {
-        display: none;
-      }
-
+      .print-btn, .notice, .subtitle { display: none; }
       .qr-card {
         border: 1px solid #ddd;
         page-break-inside: avoid;
+        background: white;
+        backdrop-filter: none;
       }
-
-      .qr-title {
-        color: #333;
-      }
-
-      .qr-token {
-        color: #999;
-      }
+      .qr-title { color: #333; }
+      .qr-url   { color: #aaa; }
+      h1        { color: #333; }
     }
   </style>
 </head>
-
 <body>
 
   <h1>🎁 QR Quà Sinh Nhật — Thảo</h1>
@@ -176,45 +163,19 @@
   <button class="print-btn" onclick="window.print()">🖨️ In QR Codes</button>
 
   <p class="notice">
-    ⚠️ Nhớ đặt file <code>birthday_thao.html</code> lên một web server (VS Code Live Server, v.v.)<br>
-    rồi thay <code>localhost:5500</code> trong URL bằng địa chỉ thật nhé.<br>
-    Hoặc dùng <strong>GitHub Pages / Netlify</strong> để có link cố định để in QR.
+    ✅ QR trỏ thẳng vào <code>datnedatne.github.io/BD2/birthday_thao.html</code><br>
+    📱 Quét bằng camera điện thoại — không cần app đặc biệt
   </p>
 
-  <!-- QR code library (CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-
   <script>
-    // ── Cấu hình — phải trùng với gift_system.js ──
-    // ⚠️ HARDCODE URL GitHub Pages để QR quét được từ điện thoại
+    // ── URL gốc trên GitHub Pages ──────────────────────────────
     const BASE_URL = 'https://datnedatne.github.io/BD2/birthday_thao.html';
-    // Nếu đổi repo/domain thì sửa dòng trên nhé
 
     const GIFTS = [
-      {
-        num: 1,
-        token: 'vutru22',
-        emoji: '🌌',
-        title: 'Quà 1\nVũ trụ của Em',
-      },
-      {
-        num: 2,
-        token: 'vuonhoa22',
-        emoji: '🌸',
-        title: 'Quà 2\nVườn hoa tình yêu',
-      },
-      {
-        num: 3,
-        token: 'bimo22',
-        emoji: '🎀',
-        title: 'Quà 3\n(Sắp có)',
-      },
-      {
-        num: 4,
-        token: 'finale22',
-        emoji: '✨',
-        title: 'Quà 4\n(Sắp có)',
-      },
+      { num: 1, token: 'vutru22',   emoji: '🌌', title: 'Quà 1\nVũ trụ của Em'    },
+      { num: 2, token: 'vuonhoa22', emoji: '🌸', title: 'Quà 2\nVườn hoa tình yêu'},
+      { num: 3, token: 'bimo22',    emoji: '🎀', title: 'Quà 3\n(Sắp có)'          },
+      { num: 4, token: 'finale22',  emoji: '✨', title: 'Quà 4\n(Sắp có)'          },
     ];
 
     const grid = document.getElementById('qr-grid');
@@ -222,42 +183,30 @@
     GIFTS.forEach(g => {
       const url = `${BASE_URL}?gift=${g.num}&t=${g.token}`;
 
+      // Dùng qrserver.com API — chỉ là <img>, không cần JS library
+      // Đen trắng thuần, viền trắng dày -> camera dễ đọc nhất
+      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?`
+        + `size=200x200`
+        + `&data=${encodeURIComponent(url)}`
+        + `&color=000000`
+        + `&bgcolor=ffffff`
+        + `&margin=2`
+        + `&ecc=M`;      // Error correction M — cân bằng mật độ
+
       const card = document.createElement('div');
       card.className = 'qr-card';
+      card.innerHTML = `
+        <div class="qr-emoji">${g.emoji}</div>
+        <div class="qr-img-wrap">
+          <img src="${qrApiUrl}" alt="QR ${g.title}" loading="lazy">
+        </div>
+        <p class="qr-title">${g.title}</p>
+        <p class="qr-url">${url}</p>
+      `;
 
-      const emojiEl = document.createElement('div');
-      emojiEl.className = 'qr-emoji';
-      emojiEl.textContent = g.emoji;
-
-      const canvasWrap = document.createElement('div');
-      canvasWrap.id = `qr-wrap-${g.num}`;
-
-      const titleEl = document.createElement('p');
-      titleEl.className = 'qr-title';
-      titleEl.textContent = g.title;
-
-      const tokenEl = document.createElement('p');
-      tokenEl.className = 'qr-token';
-      tokenEl.textContent = `Token: ${g.token}`;
-
-      const urlEl = document.createElement('p');
-      urlEl.className = 'qr-url';
-      urlEl.textContent = url;
-
-      card.append(emojiEl, canvasWrap, titleEl, tokenEl, urlEl);
       grid.appendChild(card);
-
-      // Generate QR
-      new QRCode(canvasWrap, {
-        text: url,
-        width: 160,
-        height: 160,
-        colorDark: '#2a0a20',
-        colorLight: '#fff8fb',
-        correctLevel: QRCode.CorrectLevel.H,
-      });
     });
   </script>
-</body>
 
+</body>
 </html>
