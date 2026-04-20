@@ -17,7 +17,7 @@ const GIFT_CONFIG = {
     // So sánh case-insensitive, bỏ dấu space thừa
     answers: ['nothing'],
     revealType: 'video',
-    videoSrc: '-#90356.mp4',   // ← đặt file mp4 cùng thư mục với tên này
+    videoSrc: '90356.mp4',   // ← đặt file mp4 cùng thư mục với tên này
     giftName: '🌍 Video bí mật từ khắp nơi trên thế giới',
     blessing:
       `Tình yêu anh dành cho em —
